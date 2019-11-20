@@ -68,6 +68,10 @@ type hijack404 struct {
 }
 
 func (h *hijack404) WriteHeader(code int) {
+	defer func() {
+		log.Println(code, h.R.Method, h.R.URL.Path, h.R.RemoteAddr, h.R.UserAgent())
+	}()
+
     if 404 == code && h.Handle404(h.ResponseWriter, h.R) {
         panic(h)
     }
