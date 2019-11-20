@@ -93,12 +93,12 @@ func Handle404(handler http.Handler, handle404 func (w http.ResponseWriter, r *h
 }
 
 func Fire404(w http.ResponseWriter, r *http.Request) bool {
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
     w.WriteHeader(http.StatusNotFound) // StatusNotFound = 404
 	file, err := fs.Open("404.html")
 	if err != nil {
 	    w.Write([]byte("404 not found"))
-	    return false;
+	    return true;
 	}
 	_, err = io.Copy(w, file)
 	if err != nil {
